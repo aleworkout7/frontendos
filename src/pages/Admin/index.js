@@ -42,7 +42,7 @@ export default class Admin extends Component {
 	    		{	this.state.boxes &&
 	    			this.state.boxes.map(item => (
 		            <li key={item._id}>
-		            	<a href={ process.env.URL? process.env.URL : `http://localhost:3000/box/${item._id}` } rel="noopener noreferrer" target="_blank">
+		            	<a href={`https://frontendos.herokuapp.com/box/${item._id}`} rel="noopener noreferrer" target="_blank">
 		            		<strong>{item.title}</strong>
 		            	</a>
 		            </li>
