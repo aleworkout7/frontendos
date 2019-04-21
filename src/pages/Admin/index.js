@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import socket from 'socket.io-client';
 
+import {MdFolder} from 'react-icons/md';
+import date from 'date-fns';
+import pt from 'date-fns/locale/pt';
+
+import logo from '../../assets/logo.svg';
+import './styles.css';
 
 export default class Admin extends Component {
 
@@ -16,14 +22,12 @@ export default class Admin extends Component {
 	}
 
 	subscribeToNewFiles = () => {
+
 		const io = socket('https://backendos.herokuapp.com');
 
 		io.emit('ConnectAdmin', 123);
-		//console.log("Conectado à sala <<ConnectAdmin>>")
 		io.on('createdBox', data => {
-			//console.log([data]);
-			//console.log(data);
-			//Debo agregar este objeto al arreglo boxes[]
+			//Se adiciona o objeto data no array boxes[]
 			this.setState({ boxes: [ data, ...this.state.boxes ] });
 		});
 	};	
@@ -37,17 +41,27 @@ export default class Admin extends Component {
 
 	render() {
 	  return (
-
+	  	<div id="box-container">
+	  		<header>
+	  			<img src={logo} alt="" />
+	  			<h1>Real time das boxes</h1>
+	  		</header>
 	    	<ul>
 	    		{	this.state.boxes &&
 	    			this.state.boxes.map(item => (
-		            <li key={item._id}>
-		            	<a href={`https://frontendos.herokuapp.com/box/${item._id}`} rel="noopener noreferrer" target="_blank">
-		            		<strong>{item.title}</strong>
-		            	</a>
-		            </li>
-		          ))}
+			            <li key={item._id}>
+			            	<a href={`https://frontendos.herokuapp.com/box/${item._id}`} rel="noopener noreferrer" target="_blank" className="fileInfo">
+			            		<MdFolder size={24} color="#A5CFFF" />
+			            		<strong>{item.title}</strong>
+			            	</a>
+			            	<span>
+			            	{date.format((item.createdAt), 'DD/MM/YYYY, HH:mm')}
+			    			</span>	
+			            </li>
+		        	))
+		        }
 	    	</ul>
+	    </div>
 	  );	
 	}
 	

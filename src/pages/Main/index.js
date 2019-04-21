@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import socket from 'socket.io-client';
 
-
 import './styles.css';
 import logo from '../../assets/logo.svg';
 
@@ -19,10 +18,7 @@ export default class Main extends Component {
 		const response = await api.post('boxes', {
 			title: this.state.newBox,
 		});
-
-		//emito mensagem ao socket
 		
-
 		//navego à pagina boxes
 		this.props.history.push(`/box/${response.data._id}`);
 	};
